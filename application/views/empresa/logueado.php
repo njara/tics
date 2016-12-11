@@ -57,7 +57,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="container">
 		<h1 class="text-center">  Bienvenido, <?php echo $nickname_show; ?> </h1>
 		<br>
+		<div class="row col-md-4 col-md-offset-4">
+			<a href="<?php echo base_url() ?>index.php/empresa/mostrar_orden_compra" class="btn btn-primary btn-block">Ver Orden Compra</a>
+			<br>
+			<a class="btn btn-primary btn-block">Ver Alumnos</a>
+			<br>
+			<a class="btn btn-primary btn-block">Ver Cursos</a>
 
+		</div>
 	</div>
 </body>
 

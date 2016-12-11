@@ -23,6 +23,7 @@ class Empresa extends CI_Controller {
             $usuario_data = array(
                'id_persona' => $usuario->id_persona,
                'nickname_show' => $usuario->nickname,
+               'empresa_rut' => $usuario->empresa_rut,
                'logueado' => TRUE
                );
             $this->session->set_userdata($usuario_data);
@@ -120,6 +121,33 @@ class Empresa extends CI_Controller {
             $usuario = $this->empresa_model->update_perfil($id_persona, $data, $cargo);
             $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
             redirect('index.php/empresa/mostrar_perfil');
+         }
+      }else{
+         redirect('index.php/empresa/iniciar_sesion');
+      }
+   }
+   public function mostrar_orden_compra() {
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('ordencompra_model');
+         $id_persona = $this->session->userdata('id_persona');
+         $empresa_rut = $this->session->userdata('empresa_rut');
+         $orden_compra = $this->ordencompra_model->orden_compra($empresa_rut);
+         if ($orden_compra) {
+            $data = array();
+            $data['id_curso'] = $orden_compra->id_curso; 
+            $data['curso_nombre'] = $orden_compra->curso_nombre;
+            $data['ejecutivo'] = $orden_compra->ejecutivo; 
+            $data['gestor'] = $orden_compra->gestor; 
+            $data['valor_curso'] = $orden_compra->valor_curso; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $this->load->view('empresa/mostrar_orden_compra',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $empresa_rut."error";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('empresa/mostrar_orden_compra',$data);
          }
       }else{
          redirect('index.php/empresa/iniciar_sesion');
