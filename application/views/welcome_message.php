@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="col-md-4 text-center">
 				<p>EMPRESA</p>
 
-				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/iniciar_sesion">Iniciar Sesión Empresa</a>
+				<a class="btn btn-default" href="<?php echo base_url();?>index.php/empresa/iniciar_sesion">Iniciar Sesión Empresa</a>
 			</div>	
 			<div class="col-md-4 text-center">
 				<p>ALUMNO</p>
