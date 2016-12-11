@@ -53,10 +53,9 @@ class Usuario_model extends CI_Model {
 		}
 		
 	}
-	public function obtener_cursos($rut) {
+	public function obtener_cursos() {
 		$this->db->select('curso.nombre as name');
 		$this->db->from('curso');
-		$this->db->where('id_asistente', $rut);
 		$consulta = $this->db->get();
 		return $consulta->result_array();
 	}

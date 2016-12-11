@@ -58,7 +58,7 @@ class Usuarios extends CI_Controller {
 
             if($tipo) {
 
-               $cursos = $this->usuario_model->obtener_cursos($rut);
+               $cursos = $this->usuario_model->obtener_cursos();
 
 
                $usuario_data = array(
@@ -113,7 +113,8 @@ class Usuarios extends CI_Controller {
          'logueado' => FALSE
          );
       $this->session->set_userdata($usuario_data);
-      redirect('index.php/usuarios/iniciar_sesion');
+      $this->load->view('welcome_message');
+      
    }
 
    public function mostrar_perfil() {
