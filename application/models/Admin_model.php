@@ -59,6 +59,27 @@ class Admin_model extends CI_Model {
 		$consulta = $this->db->get();
 		return $consulta->result_array();
 	}
+	public function alumnos(){
+		$this->db->select('curso.id, alumno.nombre as alumno, alumno.apellido_paterno as alumno_apellido_paterno,alumno.apellido_materno as alumno_apellido_materno,, rut, dv, correo, curso.nombre as curso_nombre');
+		$this->db->from('orden_de_compra');
+		$this->db->join('curso', 'curso.id = id_curso');
+		$this->db->join('curso_tiene_alumnos', 'curso_tiene_alumnos.id_curso = curso.id');
+		$this->db->join('persona as alumno', 'alumno.rut = id_alumno');
+		$consulta = $this->db->get();
+		$resultado = $consulta->result_array();
+		return $resultado;
+	}
+	public function orden_compra() {
+		$this->db->select('empresa.nombre as empresa, orden_de_compra.id as id, curso.nombre as curso_nombre, ejecutivo.nombre as ejecutivo, ejecutivo.apellido_paterno as ejecutivo_apellido_paterno,  gestor.nombre as gestor, gestor.apellido_paterno as gestor_apellido_paterno,valor_curso');
+		$this->db->from('orden_de_compra');
+		$this->db->join('curso', 'curso.id = id_curso');
+		$this->db->join('persona as ejecutivo', 'ejecutivo.rut = id_ejecutivo');
+		$this->db->join('persona as gestor', 'gestor.rut = id_gestor');
+		$this->db->join('empresa', 'empresa.rut = id_empresa');
+		$consulta = $this->db->get();
+		$resultado = $consulta->result_array();
+		return $resultado;
+	}
 
 }
 ?>

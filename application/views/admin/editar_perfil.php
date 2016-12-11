@@ -38,13 +38,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="<?php echo base_url();?>index.php/usuarios/logueado">HOME <span class="sr-only">(current)</span></a></li>
+					<li><a href="<?php echo base_url();?>index.php/admin/logueado">HOME <span class="sr-only">(current)</span></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a <a href="<?php echo base_url();?>index.php/usuarios/mostrar_perfil">Perfil</a></li>
+					<li class="active"><a <a href="<?php echo base_url();?>index.php/admin/mostrar_perfil">Perfil</a></li>
 					<li><a>Bienvenido, <?php echo $nickname_show ?></a></li>
 					<li>
-						<a href="<?php echo base_url() ?>index.php/usuarios/cerrar_sesion"> Cerrar sesión </a>
+						<a href="<?php echo base_url() ?>index.php/admin/cerrar_sesion"> Cerrar sesión </a>
 					</li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<br>
 	<div class="container">
 		<div class="col-md-6 col-md-offset-3">
-			<form class="form-horizontal" method="post" action="<?php echo base_url() ?>index.php/usuarios/editar_perfil">
+			<form class="form-horizontal" method="post" action="<?php echo base_url() ?>index.php/admin/editar_perfil">
 				<fieldset>
 					<legend>Editar Perfil</legend>
 					<div class="form-group">
@@ -103,7 +103,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
-							<a class="btn btn-danger btn-sm" href="<?php echo base_url();?>index.php/usuarios/mostrar_perfil"> Cancelar</a>
+							<a class="btn btn-danger btn-sm" href="<?php echo base_url();?>index.php/admin/mostrar_perfil"> Cancelar</a>
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
 					</div>

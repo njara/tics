@@ -50,7 +50,7 @@ class Admin extends CI_Controller {
             
          } else {
             $this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
-            redirect('index.php/usuarios/iniciar_sesion_admin');
+            redirect('index.php/admin/iniciar_sesion');
          }
       } else {
          $this->iniciar_sesion();
@@ -142,24 +142,24 @@ class Admin extends CI_Controller {
    }
    public function mostrar_orden_compra() {
       if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
-         $this->load->model('ordencompra_model');
+         $this->load->model('admin_model');
          $id_persona = $this->session->userdata('id_persona');
          $empresa_rut = $this->session->userdata('empresa_rut');
-         $ordenes_compra = $this->ordencompra_model->orden_compra($empresa_rut);
+         $ordenes_compra = $this->admin_model->orden_compra();
          if ($ordenes_compra) {
             $data = array();
             $data['ordenes_de_compra'] = $ordenes_compra; 
             $data['nickname_show'] = $this->session->userdata('nickname_show');
             $data['mensaje'] = $this->session->flashdata('mensaje');
             $data['error'] = "";
-            $this->load->view('empresa/mostrar_orden_compra',$data);
+            $this->load->view('admin/mostrar_orden_compra',$data);
          }
          else{
             $data['nickname_show'] = $this->session->userdata('nickname_show');
             $data['mensaje'] = $empresa_rut."error";
             $data['error'] = "No posee Ordenes de Compra.";
             $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
-            $this->load->view('empresa/mostrar_orden_compra',$data);
+            $this->load->view('admin/mostrar_orden_compra',$data);
          }
       }else{
          redirect('index.php/admin/iniciar_sesion');
@@ -168,24 +168,24 @@ class Admin extends CI_Controller {
 
    public function mostrar_alumnos() {
       if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
-         $this->load->model('alumno_model');
+         $this->load->model('admin_model');
          $id_persona = $this->session->userdata('id_persona');
          $empresa_rut = $this->session->userdata('empresa_rut');
-         $alumnos = $this->alumno_model->alumnos_empresa($empresa_rut);
+         $alumnos = $this->admin_model->alumnos();
          if ($alumnos) {
             $data = array();
             $data['alumnos'] = $alumnos; 
             $data['nickname_show'] = $this->session->userdata('nickname_show');
             $data['mensaje'] = $this->session->flashdata('mensaje');
             $data['error'] = "";
-            $this->load->view('empresa/mostrar_alumnos_empresa',$data);
+            $this->load->view('admin/mostrar_alumnos_empresa',$data);
          }
          else{
             $data['nickname_show'] = $this->session->userdata('nickname_show');
             $data['mensaje'] = $empresa_rut."error";
-            $data['error'] = "No posee Ordenes de Compra.";
+            $data['error'] = "No posee Alumnos.";
             $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
-            $this->load->view('empresa/mostrar_alumnos_empresa',$data);
+            $this->load->view('admin/mostrar_alumnos_empresa',$data);
          }
       }else{
          redirect('index.php/admin/iniciar_sesion');
