@@ -82,13 +82,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<p>Bienvenido a la Plataforma Web GIPAC</p>
 			<br>
 			<br>
-			<div class="col-md-6 text-center">
-				<p>Presiona este boton si eres EMPRESA</p>
+			<div class="col-md-4 text-center">
+				<p>ADMINISTRADOR</p>
+				
+				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/iniciar_sesion_admin">Iniciar Sesión Administrador</a>
+			</div>	
+			<div class="col-md-4 text-center">
+				<p>EMPRESA</p>
 
 				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/iniciar_sesion">Iniciar Sesión Empresa</a>
 			</div>	
-			<div class="col-md-6 text-center">
-				<p>Presiona este boton si eres ALUMNO</p>
+			<div class="col-md-4 text-center">
+				<p>ALUMNO</p>
 				
 				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/iniciar_sesion">Iniciar Sesión Alumno</a>
 			</div>
