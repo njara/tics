@@ -22,10 +22,12 @@ class OrdenCompra extends CI_Controller {
             $data['valor_curso'] = $orden_compra->valor_curso; 
             $data['nickname_show'] = $this->session->userdata('nickname_show');
             $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
             $this->load->view('empresa/mostrar_orden_compra',$data);
          }
          else{
             $data['mensaje'] = $this->session->flashdata('mensaje',"error");
+            $data['error'] = "No posee Ordenes de Compra.";
             $this->load->view('empresa/mostrar_orden_compra',$data);
          }
       }else{

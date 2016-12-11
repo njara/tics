@@ -1,19 +1,19 @@
 <?php
 
-class OrdenCompra_model extends CI_Model { 
+class Ordencompra_model extends CI_Model { 
 	public function __construct() {
 		parent::__construct();
 	}
 	public function orden_compra($rut_empresa){
 
-		$this->db->select('id_curso, curso.nombre as curso_nombre, ejecutivo.nombre as ejecutivo, gestor.nombre as gestor, valor_curso');
+		$this->db->select('orden_de_compra.id as id, curso.nombre as curso_nombre, ejecutivo.nombre as ejecutivo, ejecutivo.apellido_paterno as ejecutivo_apellido_paterno,  gestor.nombre as gestor, gestor.apellido_paterno as gestor_apellido_paterno,valor_curso');
+		$this->db->from('orden_de_compra');
 		$this->db->join('curso', 'curso.id = id_curso');
 		$this->db->join('persona as ejecutivo', 'ejecutivo.rut = id_ejecutivo');
 		$this->db->join('persona as gestor', 'gestor.rut = id_gestor');
-		$this->db->from('orden_de_compra');
 		$this->db->where('id_empresa', $rut_empresa);
 		$consulta = $this->db->get();
-		$resultado = $consulta->row();
+		$resultado = $consulta->result_array();
 		return $resultado;
 	}
 

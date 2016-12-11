@@ -38,10 +38,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="ACTIVE"><a href="<?php echo base_url();?>index.php/empresa/logueado">HOME <span class="sr-only">(current)</span></a></li>
+          <li class=""><a href="<?php echo base_url();?>index.php/empresa/logueado">HOME <span class="sr-only">(current)</span></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a <a href="<?php echo base_url();?>index.php/empresa/mostrar_perfil">Perfil</a></li>
+          <li class=""><a <a href="<?php echo base_url();?>index.php/empresa/mostrar_perfil">Perfil</a></li>
           <li><a>Bienvenido, <?php echo $nickname_show ?></a></li>
           <li>
             <a href="<?php echo base_url() ?>index.php/empresa/cerrar_sesion"> Cerrar sesión </a>
@@ -54,24 +54,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <br>
   <br>
   <div class="container">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="list-group">
-        <p class="list-group-item active">Perfil</p>
-        <p class="list-group-item"><strong>Rut:</strong> <?php echo "casa"; ?> - <?php echo "casa"; ?></p>
+
+    <?php if($error): ?>
+      <div class="col-md-6 col-md-offset-3">
+        <h3 class="text-center" style="color: red;"> <?php echo $error ?></h3>
+        <a href="<?php echo base_url();?>index.php/empresa/logueado" class="btn btn-primary" >Volver</a>
       </div>
-      <?php if ($mensaje): ?>
+    <?php else: ?>
+      <div class="col-md-10 col-md-offset-1">
 
 
-       <div class="alert alert-dismissible alert-success">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Correcto!</strong>  <p> <?php echo $mensaje ?> </p>
-      </div>
 
-    <?php endif; ?>
+       <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Ordenes de Compra</h3>
+        </div>
+        <div class="panel-body">
+         <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th>Nº</th>
+              <th>Curso</th>
+              <th>Ejecutivo</th>
+              <th>Gestor</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
 
-    <a href="<?php echo base_url();?>index.php/empresa/logueado" class="btn btn-primary" >Volver</a>
-    <a class="btn btn-info" href="<?php echo base_url();?>index.php/empresa/editar_perfil">Editar</a>
+           <?php
+           foreach ($ordenes_de_compra as $row)
+           {
+            echo "<tr>";
+            echo "<td>".$row['id']."</td>";
+            echo "<td>".$row['curso_nombre']."</td>";
+            echo "<td>".$row['ejecutivo']." ".$row['ejecutivo_apellido_paterno']."</td>";
+            echo "<td>".$row['gestor']." ".$row['gestor_apellido_paterno']."</td>";
+            echo "<td>".$row['valor_curso']."</td>";
+            echo "</tr>";
+          }
+          ?>
+        </tbody>
+      </table> 
+    </div>
   </div>
+  <a href="<?php echo base_url();?>index.php/empresa/logueado" class="btn btn-primary" >Volver</a>
+</div>
+<?php endif; ?>
+
 </div>
 </body>
 

@@ -4,17 +4,16 @@ class Alumno_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 	}
-	public function empresa_por_rut_password($rut, $password){
+	public function alumnos_empresa($rut_empresa){
 
-		$this->db->select('usuario.id_persona, persona.nickname');
-		$this->db->from('usuario');
-		$this->db->join('persona', 'persona.rut = usuario.id_persona');
-		$this->db->join('empresa', 'empresa.id_contacto = usuario.id_persona');
-		$this->db->join('persona_es_contacto', 'persona_es_contacto.id_rut = usuario.id_persona');
-		$this->db->where('usuario.id_persona', $rut);
-		$this->db->where('usuario.password', $password);
+		$this->db->select('curso.id, alumno.nombre as alumno, alumno.apellido_paterno as alumno_apellido_paterno,alumno.apellido_materno as alumno_apellido_materno,, rut, dv, correo, curso.nombre as curso_nombre');
+		$this->db->from('orden_de_compra');
+		$this->db->join('curso', 'curso.id = id_curso');
+		$this->db->join('curso_tiene_alumnos', 'curso_tiene_alumnos.id_curso = curso.id');
+		$this->db->join('persona as alumno', 'alumno.rut = id_alumno');
+		$this->db->where('id_empresa', $rut_empresa);
 		$consulta = $this->db->get();
-		$resultado = $consulta->row();
+		$resultado = $consulta->result_array();
 		return $resultado;
 	}
 
@@ -26,7 +25,7 @@ class Alumno_model extends CI_Model {
 		$this->db->join('empresa', 'empresa.id_contacto = persona.rut');
 		$this->db->join('persona_es_contacto', 'persona_es_contacto.id_rut = persona.rut');
 		$this->db->where('persona.rut',$id_persona);
-		
+
 		$consulta = $this->db->get();
 		$resultado = $consulta->row();
 		return $resultado;
