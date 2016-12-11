@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
    exit('No direct script access allowed');
-class Usuarios extends CI_Controller {
+class Admin extends CI_Controller {
 
    public function __construct() {
       parent::__construct();
@@ -10,53 +10,24 @@ class Usuarios extends CI_Controller {
    public function iniciar_sesion() {
       $data = array();
       $data['error'] = $this->session->flashdata('error');
-      $this->load->view('usuarios/iniciar_sesion', $data);
-   }
-
-   public function iniciar_sesion_admin() {
-      
+      $this->load->view('admin/iniciar_sesion', $data);
    }
 
    public function iniciar_sesion_post() {
       if ($this->input->post()) {
          $rut = $this->input->post('rut');
          $password = $this->input->post('password');
-         $this->load->model('usuario_model');
-         $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
-         if ($usuario) {
-            $usuario_data = array(
-               'id_persona' => $usuario->id_persona,
-               'nickname_show' => $usuario->nickname,
-               'logueado' => TRUE
-               );
-            $this->session->set_userdata($usuario_data);
-
-            redirect('index.php/usuarios/logueado');
-            
-         } else {
-            $this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
-            redirect('index.php/usuarios/iniciar_sesion');
-         }
-      } else {
-         $this->iniciar_sesion();
-      }
-   }
-
-    public function iniciar_sesion_admin_post() {
-      if ($this->input->post()) {
-         $rut = $this->input->post('rut');
-         $password = $this->input->post('password');
-         $this->load->model('usuario_model');
-         $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
+         $this->load->model('admin_model');
+         $usuario = $this->admin_model->usuario_por_nickname_password($rut, $password);
          if ($usuario) {
           
 
-            $tipo = $this->usuario_model->es_admin($rut);
+            $tipo = $this->admin_model->es_admin($rut);
 
 
             if($tipo) {
 
-               $cursos = $this->usuario_model->obtener_cursos();
+               $cursos = $this->admin_model->obtener_cursos();
 
 
                $usuario_data = array(
@@ -68,11 +39,11 @@ class Usuarios extends CI_Controller {
             
 
                $this->session->set_userdata($usuario_data);
-               $this->load->view('usuarios/admin_logueado', $usuario_data);
+               $this->load->view('admin/logueado', $usuario_data);
             } else {
 
                $this->session->set_flashdata('error', 'El usuario no es ADMINISTRADOR.');
-               redirect('index.php/usuarios/iniciar_sesion_admin');
+               redirect('index.php/admin/iniciar_sesion');
             }
             
 
@@ -90,19 +61,9 @@ class Usuarios extends CI_Controller {
       if($this->session->userdata('logueado')){
          $data = array();
          $data['nickname_show'] = $this->session->userdata('nickname_show');
-         $this->load->view('usuarios/logueado', $data);
+         $this->load->view('admin/logueado', $data);
       }else{
-         redirect('index.php/usuarios/iniciar_sesion');
-      }
-   }
-
-    public function logueado_admin() {
-      if($this->session->userdata('logueado')){
-         $data = array();
-         $data['nickname_show'] = $this->session->userdata('nickname_show');
-         $this->load->view('usuarios/admin_logueado', $data);
-      }else{
-         redirect('index.php/usuarios/iniciar_sesion');
+         redirect('index.php/admin/iniciar_sesion');
       }
    }
 
@@ -111,15 +72,14 @@ class Usuarios extends CI_Controller {
          'logueado' => FALSE
          );
       $this->session->set_userdata($usuario_data);
-      $this->load->view('usuarios/iniciar_sesion');
-      
+      redirect('index.php/admin/iniciar_sesion');
    }
 
    public function mostrar_perfil() {
-      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
-         $this->load->model('usuario_model');
+       if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('admin_model');
          $id_persona = $this->session->userdata('id_persona');
-         $perfil = $this->usuario_model->perfil($id_persona);
+         $perfil = $this->admin_model->perfil($id_persona);
          if ($perfil) {
             $data = array();
             $data['rut'] = $perfil->rut; 
@@ -132,19 +92,19 @@ class Usuarios extends CI_Controller {
             $data['sexo'] = $perfil->sexo; 
             $data['nickname_show'] = $this->session->userdata('nickname_show');
             $data['mensaje'] = $this->session->flashdata('mensaje');
-            $this->load->view('usuarios/mostrar_perfil',$data);
+            $this->load->view('admin/mostrar_perfil',$data);
          }
       }else{
-         redirect('index.php/usuarios/iniciar_sesion');
+         redirect('index.php/admin/iniciar_sesion');
       }
    }
 
    public function editar_perfil() {
       if($this->session->userdata('logueado')){
          if (!$this->input->post()) {
-            $this->load->model('usuario_model');
+            $this->load->model('admin_model');
             $id_persona = $this->session->userdata('id_persona');
-            $perfil = $this->usuario_model->perfil($id_persona);
+            $perfil = $this->admin_model->perfil($id_persona);
             if ($perfil) {
                $data = array();
                $data['rut'] = $perfil->rut; 
@@ -156,7 +116,7 @@ class Usuarios extends CI_Controller {
                $data['correo'] = $perfil->correo; 
                $data['nickname_show'] = $this->session->userdata('nickname_show');
                
-               $this->load->view('usuarios/editar_perfil',$data);
+               $this->load->view('admin/editar_perfil',$data);
             }
          }else{
             $data = array();
@@ -171,13 +131,64 @@ class Usuarios extends CI_Controller {
             $data['sexo']=$this->input->post('sexo');
             $data['nickname'] =$this->input->post('nickname');
             $this->session->set_userdata('nickname_show', $data['nickname']);
-            $this->load->model('usuario_model');
-            $usuario = $this->usuario_model->editar_perfil($id_persona, $data);
+            $this->load->model('admin_model');
+            $usuario = $this->admin_model->editar_perfil($id_persona, $data);
             $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
-            redirect('index.php/usuarios/mostrar_perfil');
+            redirect('index.php/admin/mostrar_perfil');
          }
       }else{
-         redirect('index.php/usuarios/iniciar_sesion');
+         redirect('index.php/admin/iniciar_sesion');
+      }
+   }
+   public function mostrar_orden_compra() {
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('ordencompra_model');
+         $id_persona = $this->session->userdata('id_persona');
+         $empresa_rut = $this->session->userdata('empresa_rut');
+         $ordenes_compra = $this->ordencompra_model->orden_compra($empresa_rut);
+         if ($ordenes_compra) {
+            $data = array();
+            $data['ordenes_de_compra'] = $ordenes_compra; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
+            $this->load->view('empresa/mostrar_orden_compra',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $empresa_rut."error";
+            $data['error'] = "No posee Ordenes de Compra.";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('empresa/mostrar_orden_compra',$data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
+      }
+   }
+
+   public function mostrar_alumnos() {
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('alumno_model');
+         $id_persona = $this->session->userdata('id_persona');
+         $empresa_rut = $this->session->userdata('empresa_rut');
+         $alumnos = $this->alumno_model->alumnos_empresa($empresa_rut);
+         if ($alumnos) {
+            $data = array();
+            $data['alumnos'] = $alumnos; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
+            $this->load->view('empresa/mostrar_alumnos_empresa',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $empresa_rut."error";
+            $data['error'] = "No posee Ordenes de Compra.";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('empresa/mostrar_alumnos_empresa',$data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
       }
    }
 }

@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="col-md-4 text-center">
 				<p>ADMINISTRADOR</p>
 				
-				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/iniciar_sesion_admin">Iniciar Sesión Administrador</a>
+				<a class="btn btn-default" href="<?php echo base_url();?>index.php/admin/iniciar_sesion">Iniciar Sesión Administrador</a>
 			</div>	
 			<div class="col-md-4 text-center">
 				<p>EMPRESA</p>

@@ -38,63 +38,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class=""><a href="<?php echo base_url();?>index.php/">HOME <span class="sr-only">(current)</span></a></li>
+          <li class="ACTIVE"><a href="<?php echo base_url();?>index.php/usuarios/logueado">HOME <span class="sr-only">(current)</span></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-
+          <li class="active"><a <a href="<?php echo base_url();?>index.php/usuarios/mostrar_perfil">Perfil</a></li>
+          <li><a>Bienvenido, <?php echo $nickname_show ?></a></li>
+          <li>
+            <a href="<?php echo base_url() ?>index.php/usuarios/cerrar_sesion"> Cerrar sesión </a>
+          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
   <!-- ______________________________________________BODY____________________________________________-->
-  
+  <br>
+  <br>
   <div class="container">
-   <h1 class="text-center"> Iniciar sesión </h1>
-   <br>
-
-
-   <div class="col-md-6 col-md-offset-3">
-     <form class="form-horizontal" method="post" action="<?php echo base_url() ?>index.php/usuarios/iniciar_sesion_admin_post">
-      <fieldset>
-        <legend>INICIAR SESIÓN ADMINISTRADOR</legend>
-
-
-
-
-        <div class="form-group">
-          <label for="rut" class="col-lg-2 control-label">Rut</label>
-          <div class="col-lg-10">
-            <input type="text" class="form-control" name="rut" id="rut" placeholder="Ej: 11111111-1">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password" class="col-lg-2 control-label">Contraseña</label>
-          <div class="col-lg-10">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">
-          </div>
-        </div>
-
-        <?php if ($error): ?>
-
-
-          <div class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>Error!</strong>  <p> <?php echo $error ?> </p>
-        </div>
-
-      <?php endif; ?>
-
-      <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
-          <a class="btn btn-danger btn-sm" href="<?php echo base_url();?>index.php/"> Volver</a>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+    <div class="col-md-6 col-md-offset-3">
+      <div class="list-group">
+        <p class="list-group-item active">Perfil</p>
+        <p class="list-group-item"><strong>Rut:</strong> <?php echo $rut; ?> - <?php echo $dv; ?></p>
+        <p class="list-group-item"><strong>Nickname:</strong> <?php echo $nickname; ?></p>
+        <p class="list-group-item"><strong>Nombre:</strong> <?php echo $nombre; ?></p>
+        <p class="list-group-item"><strong>Apellido Paterno:</strong> <?php echo $apellido_paterno; ?></p>
+        <p class="list-group-item"><strong>Apellido Materno:</strong> <?php echo $apellido_materno; ?></p>
+        <p class="list-group-item"><strong>Correo:</strong> <?php echo $correo; ?></p>
+        <p class="list-group-item"><strong>Sexo:</strong> <?php echo $sexo; ?></p>
       </div>
-    </fieldset>
-  </form>
-</div>
+      <?php if ($mensaje): ?>
 
 
+       <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Correcto!</strong>  <p> <?php echo $mensaje ?> </p>
+      </div>
+
+    <?php endif; ?>
+
+    <a href="<?php echo base_url();?>index.php/usuarios/logueado" class="btn btn-primary" >Volver</a>
+    <a class="btn btn-info" href="<?php echo base_url();?>index.php/usuarios/editar_perfil">Editar</a>
+  </div>
 </div>
 </body>
 
