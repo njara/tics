@@ -57,6 +57,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="container">
 		<h1 class="text-center">  Bienvenido ADMINISTRADOR, <?php echo $nickname_show; ?> </h1>
 		<br>
+		<?php
+
+		foreach ($cursos as $key) {
+			echo $key['name'].' '.'<a class="btn btn-info" href="">Ver</a>';
+			echo '<br>';
+		}
+
+		?>
 
 	</div>
 </body>

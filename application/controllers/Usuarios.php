@@ -51,18 +51,28 @@ class Usuarios extends CI_Controller {
          $this->load->model('usuario_model');
          $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
          if ($usuario) {
-            $usuario_data = array(
-               'id_persona' => $usuario->id_persona,
-               'nickname_show' => $usuario->nickname,
-               'logueado' => TRUE
-               );
-            $this->session->set_userdata($usuario_data);
+          
 
             $tipo = $this->usuario_model->es_admin($rut);
+
+
             if($tipo) {
 
-               redirect('index.php/usuarios/logueado_admin');
+               $cursos = $this->usuario_model->obtener_cursos($rut);
+
+
+               $usuario_data = array(
+               'id_persona' => $usuario->id_persona,
+               'nickname_show' => $usuario->nickname,
+               'logueado' => TRUE,
+               'cursos' => $cursos
+               );
+            
+
+               $this->session->set_userdata($usuario_data);
+               $this->load->view('usuarios/admin_logueado', $usuario_data);
             } else {
+
                $this->session->set_flashdata('error', 'El usuario no es ADMINISTRADOR.');
                redirect('index.php/usuarios/iniciar_sesion_admin');
             }
