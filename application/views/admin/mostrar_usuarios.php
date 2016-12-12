@@ -92,7 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									echo '<td>'.$row['rut']."</td>";
 									echo "<td>".$row['nombre']."</td>";
 									echo "<td>".$row['nickname']."</td>";
-									if($row['status']){
+									if($row['status'] == 1){
 										echo '<td><div>
         								  	<button class="btn btn-success btn-sm" type="submit"> OK</button>
 								          </div>'.'</td>';

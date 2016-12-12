@@ -26,20 +26,24 @@ class Admin extends CI_Controller {
 
 
             if($tipo) {
+               if($this->admin_model->isBanned($rut)){
+                    $this->session->set_flashdata('error', 'El usuario está suspendido.');
+                  redirect('index.php/admin/iniciar_sesion');
+               } else {
+                
+                  $usuario_data = array(
+                  'id_persona' => $usuario->id_persona,
+                  'nickname_show' => $usuario->nickname,
+                  'logueado' => TRUE,
+                          );
+               
 
-               $cursos = $this->admin_model->obtener_cursos();
+                  $this->session->set_userdata($usuario_data);
+                  $this->load->view('admin/logueado', $usuario_data);
 
 
-               $usuario_data = array(
-               'id_persona' => $usuario->id_persona,
-               'nickname_show' => $usuario->nickname,
-               'logueado' => TRUE,
-               'cursos' => $cursos
-               );
-            
-
-               $this->session->set_userdata($usuario_data);
-               $this->load->view('admin/logueado', $usuario_data);
+                 
+               }
             } else {
 
                $this->session->set_flashdata('error', 'El usuario no es ADMINISTRADOR.');
