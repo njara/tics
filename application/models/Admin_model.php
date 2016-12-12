@@ -121,5 +121,24 @@ class Admin_model extends CI_Model {
 		}
 	}
 
+  public function evaluaciones(){
+    $this->db->select('nombre, fecha');
+    $this->db->from('evaluacion');
+    $consulta = $this->db->get();
+    $resultado = $consulta->result_array();
+    return $resultado;
+  }
+
+  public function crear_evaluacion($data){
+    $this->db->insert('evaluacion', $data);
+  }
+  public function cursos(){
+    $this->db->select('id, nombre, fecha_inicio, fecha_termino, direccion_ejecuccion, valor_curso');
+    $this->db->from('curso');
+    $consulta = $this->db->get();
+    $resultado = $consulta->result_array();
+    return $resultado;
+  }
+
 }
 ?>

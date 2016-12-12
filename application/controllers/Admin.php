@@ -144,6 +144,38 @@ class Admin extends CI_Controller {
          redirect('index.php/admin/iniciar_sesion');
       }
    }
+
+   public function crear_prueba() {
+      if($this->session->userdata('logueado')){
+         if (!$this->input->post()) {
+            $this->load->model('admin_model');
+            $data = array();
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+
+            $cursos = $this->admin_model->cursos();
+            $data['cursos'] = $cursos;
+            $this->load->view('admin/crear_prueba', $data);
+         }else{
+            $data = array();
+            $id_persona = $this->session->userdata('id_persona');
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+
+            $data2 = array();
+            $data2['nombre']=$this->input->post('nombre');
+            $data2['fecha']=$this->input->post('fecha');
+            $data2['duracion']=60;
+            $data2['id_curso']=$this->input->post('curso');
+
+            $this->load->model('admin_model');
+            $usuario = $this->admin_model->crear_evaluacion($data2);
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            redirect('index.php/admin/mostrar_pruebas', $data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
+      }
+   }
+
    public function mostrar_orden_compra() {
       if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
          $this->load->model('admin_model');
@@ -220,6 +252,33 @@ class Admin extends CI_Controller {
          redirect('index.php/admin/iniciar_sesion');
       }
    }
+
+   public function mostrar_pruebas() {
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('admin_model');
+         $id_persona = $this->session->userdata('id_persona');
+         $empresa_rut = $this->session->userdata('empresa_rut');
+         $evaluaciones = $this->admin_model->evaluaciones();
+         if ($evaluaciones) {
+            $data = array();
+            $data['evaluaciones'] = $evaluaciones; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
+            $this->load->view('admin/mostrar_evaluaciones',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $empresa_rut."error";
+            $data['error'] = "No posee evaluaciones.";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('admin/mostrar_evaluaciones',$data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
+      }
+   }
+
     public function mostrar_usuarios(){
       if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
          $this->load->model('admin_model');
@@ -260,6 +319,32 @@ class Admin extends CI_Controller {
          
       } else {
          $this->iniciar_sesion();
+      }
+   }
+
+   public function mostrar_cursos() {
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('admin_model');
+         $id_persona = $this->session->userdata('id_persona');
+         $empresa_rut = $this->session->userdata('empresa_rut');
+         $cursos = $this->admin_model->cursos();
+         if ($cursos) {
+            $data = array();
+            $data['cursos'] = $cursos; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
+            $this->load->view('admin/mostrar_cursos',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $empresa_rut."error";
+            $data['error'] = "No posee evaluaciones.";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('admin/mostrar_cursos',$data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
       }
    }
 }
