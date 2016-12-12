@@ -31,11 +31,19 @@ class Usuario_model extends CI_Model {
 		$this->db->update('persona',$data);
 		return true;
 	}
-	
-	public function crear_perfil($perfil,$usuario){
+
+	public function crear_perfil($perfil,$usuario,$data){
 		$this->db->insert('persona',$perfil);
 		$this->db->insert('usuario',$usuario);
+		$this->db->insert('persona_es_alumno',$data);
 		return true;
 	}
+
+	public function marcar_sesion_valida($id_persona,$data){
+		$this->db->where('rut',$id_persona);
+		$this->db->update('persona',$data);
+		return true;
+	}
+
 }
 ?>

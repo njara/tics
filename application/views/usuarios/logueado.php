@@ -56,6 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<div class="container">
 		<h1 class="text-center">  Bienvenido, <?php echo $nickname_show; ?> </h1>
+		<h3 style="color: red;" class="text-center">  No posee pruebas asignadas. </h3>
 		<br>
 
 	</div>

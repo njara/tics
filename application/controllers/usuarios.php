@@ -20,6 +20,9 @@ class Usuarios extends CI_Controller {
          $this->load->model('usuario_model');
          $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
          if ($usuario) {
+            $datos = array();
+            $datos['ultima_sesion'] = date("Y-m-d H:i:s"); 
+            $this->usuario_model->marcar_sesion_valida($rut, $datos);
             $usuario_data = array(
                'id_persona' => $usuario->id_persona,
                'nickname_show' => $usuario->nickname,
@@ -138,15 +141,20 @@ class Usuarios extends CI_Controller {
          $data['sexo']=$this->input->post('sexo');
          $data['correo']=$this->input->post('correo');
          $data['fecha_registro']=date("Y-m-d H:i:s");
+         $data['avatar']="Default";
+         $data['status']="1";
 
          $data2 = array();
          $data2['id_persona'] = $this->input->post('rut');
          $data2['dv'] = "1";
          $data2['password'] = $this->input->post('password');
          
+         $data3 = array();
+         $data3['id_rut'] = $this->input->post('rut');
+         $data3['numero_credencial'] = "123".$this->input->post('rut');
 
          $this->load->model('usuario_model');
-         $usuario = $this->usuario_model->crear_perfil($data,$data2);
+         $usuario = $this->usuario_model->crear_perfil($data,$data2,$data3);
          $this->session->set_flashdata('mensaje', 'Perfil Creado con Éxito!');
          redirect('index.php/usuarios/iniciar_sesion');
       }
