@@ -51,7 +51,8 @@ class Usuarios extends CI_Controller {
          'logueado' => FALSE
          );
       $this->session->set_userdata($usuario_data);
-      redirect('index.php/usuarios/iniciar_sesion');
+      $this->session->sess_destroy();
+      redirect('index.php/');
    }
 
    public function mostrar_perfil() {
@@ -116,6 +117,37 @@ class Usuarios extends CI_Controller {
             redirect('index.php/usuarios/mostrar_perfil');
          }
       }else{
+         redirect('index.php/usuarios/iniciar_sesion');
+      }
+   }
+
+   public function registro_usuario() {
+      if (!$this->input->post()) {
+         $this->load->model('usuario_model');
+         $data = array();
+         $this->load->view('usuarios/registro_usuario',$data);
+         
+      }else{
+         $data = array();
+
+         $data['nickname']=$this->input->post('nickname');
+         $data['rut']=$this->input->post('rut');
+         $data['nombre']=$this->input->post('nombre');
+         $data['apellido_paterno']=$this->input->post('apellido_paterno');
+         $data['apellido_materno']=$this->input->post('apellido_materno');
+         $data['sexo']=$this->input->post('sexo');
+         $data['correo']=$this->input->post('correo');
+         $data['fecha_registro']=date("Y-m-d H:i:s");
+
+         $data2 = array();
+         $data2['id_persona'] = $this->input->post('rut');
+         $data2['dv'] = "1";
+         $data2['password'] = $this->input->post('password');
+         
+
+         $this->load->model('usuario_model');
+         $usuario = $this->usuario_model->crear_perfil($data,$data2);
+         $this->session->set_flashdata('mensaje', 'Perfil Creado con Éxito!');
          redirect('index.php/usuarios/iniciar_sesion');
       }
    }

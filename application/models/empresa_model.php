@@ -18,6 +18,19 @@ class Empresa_model extends CI_Model {
 		return $resultado;
 	}
 
+	public function empresa_por_rut_empresa($rut_empresa){
+
+		$this->db->select('rut, empresa.nombre, direccion_comercial, comuna.nombre as comuna_nombre, ciudad.nombre as ciudad_nombre, telefono, giro_comercial.nombre as giro_nombre');
+		$this->db->from('empresa');
+		$this->db->join('giro_comercial', 'giro_comercial.id = id_giro_comercial');
+		$this->db->join('comuna', 'comuna.id = id_comuna');
+		$this->db->join('ciudad', 'ciudad.id = comuna.id_ciudad');
+		$this->db->where('rut', $rut_empresa);
+		$consulta = $this->db->get();
+		$resultado = $consulta->row();
+		return $resultado;
+	}
+
 	public function select_perfil($id_persona){
 		$this->db->select('persona.rut, dv, nickname, persona.nombre as nombre, apellido_paterno, apellido_materno,correo, sexo.nombre as sexo, empresa.nombre as empresa, cargo_en_la_empresa, empresa.rut as empresa_rut');
 		$this->db->from('persona');

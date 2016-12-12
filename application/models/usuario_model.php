@@ -25,9 +25,16 @@ class Usuario_model extends CI_Model {
 		$resultado = $consulta->row();
 		return $resultado;
 	}
+
 	public function editar_perfil($id_persona,$data){
 		$this->db->where('rut',$id_persona);
 		$this->db->update('persona',$data);
+		return true;
+	}
+	
+	public function crear_perfil($perfil,$usuario){
+		$this->db->insert('persona',$perfil);
+		$this->db->insert('usuario',$usuario);
 		return true;
 	}
 }

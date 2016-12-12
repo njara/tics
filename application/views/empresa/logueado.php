@@ -63,6 +63,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a href="<?php echo base_url() ?>index.php/empresa/mostrar_alumnos" class="btn btn-primary btn-block">Ver Alumnos</a>
 			<br>
 			<a class="btn btn-primary btn-block">Ver Cursos</a>
+			<br>
+			<a href="<?php echo base_url() ?>index.php/empresa/mostrar_datos_empresa" class="btn btn-primary btn-block">Datos Empresa</a>
 
 		</div>
 	</div>
