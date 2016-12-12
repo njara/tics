@@ -170,7 +170,7 @@ class Admin extends CI_Controller {
       if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
          $this->load->model('admin_model');
          $id_persona = $this->session->userdata('id_persona');
-         $empresa_rut = $this->session->userdata('empresa_rut');
+         
          $alumnos = $this->admin_model->alumnos();
          if ($alumnos) {
             $data = array();
@@ -182,10 +182,60 @@ class Admin extends CI_Controller {
          }
          else{
             $data['nickname_show'] = $this->session->userdata('nickname_show');
-            $data['mensaje'] = $empresa_rut."error";
+            
             $data['error'] = "No posee Alumnos.";
             $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
             $this->load->view('admin/mostrar_alumnos_empresa',$data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
+      }
+   }
+   public function mostrar_empresas(){
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('admin_model');
+         $id_persona = $this->session->userdata('id_persona');
+         
+         $empresas = $this->admin_model->empresas();
+         if ($empresas) {
+            $data = array();
+            $data['empresas'] = $empresas; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
+            $this->load->view('admin/mostrar_empresas',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            
+            $data['error'] = "No posee Alumnos.";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('admin/mostrar_empresas',$data);
+         }
+      }else{
+         redirect('index.php/admin/iniciar_sesion');
+      }
+   }
+    public function mostrar_usuarios(){
+      if($this->session->userdata('logueado') && $this->session->userdata('id_persona')){
+         $this->load->model('admin_model');
+         $id_persona = $this->session->userdata('id_persona');
+         
+         $usuarios = $this->admin_model->usuarios();
+         if ($usuarios) {
+            $data = array();
+            $data['usuarios'] = $usuarios; 
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            $data['mensaje'] = $this->session->flashdata('mensaje');
+            $data['error'] = "";
+            $this->load->view('admin/mostrar_usuarios',$data);
+         }
+         else{
+            $data['nickname_show'] = $this->session->userdata('nickname_show');
+            
+            $data['error'] = "No posee Usuarios.";
+            $this->session->set_flashdata('mensaje', 'Perfil Editado con Exito!');
+            $this->load->view('admin/mostrar_usuarios',$data);
          }
       }else{
          redirect('index.php/admin/iniciar_sesion');

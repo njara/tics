@@ -80,6 +80,24 @@ class Admin_model extends CI_Model {
 		$resultado = $consulta->result_array();
 		return $resultado;
 	}
+	public function empresas(){
+		$this->db->select('rut, nombre, id_contacto, telefono');
+		$this->db->from('empresa');
+		
+		$consulta = $this->db->get();
+		$resultado = $consulta->result_array();
+		return $resultado;
+	}
+
+	public function usuarios(){
+		$this->db->select('persona.rut, persona.nombre, persona.nickname');
+		$this->db->from('usuario');
+		$this->db->join('persona','usuario.id_persona = persona.rut');
+		
+		$consulta = $this->db->get();
+		$resultado = $consulta->result_array();
+		return $resultado;
+	}
 
 }
 ?>
