@@ -71,6 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				
 				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/iniciar_sesion">Iniciar Sesión Alumno</a>
 				<br>
+				<br>
 				<a class="btn btn-default" href="<?php echo base_url();?>index.php/usuarios/registro_usuario">Crear Cuento Alumno</a>
 			</div>
 		</div>
