@@ -13,9 +13,6 @@ class Usuarios extends CI_Controller {
       $this->load->view('usuarios/iniciar_sesion', $data);
    }
 
-   public function iniciar_sesion_admin() {
-      
-   }
 
    public function iniciar_sesion_post() {
       if ($this->input->post()) {
@@ -24,14 +21,21 @@ class Usuarios extends CI_Controller {
          $this->load->model('usuario_model');
          $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
          if ($usuario) {
-            $usuario_data = array(
-               'id_persona' => $usuario->id_persona,
-               'nickname_show' => $usuario->nickname,
-               'logueado' => TRUE
-               );
-            $this->session->set_userdata($usuario_data);
-
-            redirect('index.php/usuarios/logueado');
+           if($this->usuario_model->isBanned($rut)){
+               $this->session->set_flashdata('error', 'El usuario está suspendido.');
+            redirect('index.php/usuarios/iniciar_sesion');
+            }  else {
+               $datos = array();
+               $datos['ultima_sesion'] = date("Y-m-d H:i:s"); 
+               $this->usuario_model->marcar_sesion_valida($rut, $datos);
+               $usuario_data = array(
+                  'id_persona' => $usuario->id_persona,
+                  'nickname_show' => $usuario->nickname,
+                  'logueado' => TRUE
+                  );
+               $this->session->set_userdata($usuario_data);
+               redirect('index.php/usuarios/logueado');
+            }
             
          } else {
             $this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
@@ -41,50 +45,7 @@ class Usuarios extends CI_Controller {
          $this->iniciar_sesion();
       }
    }
-
-    public function iniciar_sesion_admin_post() {
-      if ($this->input->post()) {
-         $rut = $this->input->post('rut');
-         $password = $this->input->post('password');
-         $this->load->model('usuario_model');
-         $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
-         if ($usuario) {
-          
-
-            $tipo = $this->usuario_model->es_admin($rut);
-
-
-            if($tipo) {
-
-               $cursos = $this->usuario_model->obtener_cursos();
-
-
-               $usuario_data = array(
-               'id_persona' => $usuario->id_persona,
-               'nickname_show' => $usuario->nickname,
-               'logueado' => TRUE,
-               'cursos' => $cursos
-               );
-            
-
-               $this->session->set_userdata($usuario_data);
-               $this->load->view('usuarios/admin_logueado', $usuario_data);
-            } else {
-
-               $this->session->set_flashdata('error', 'El usuario no es ADMINISTRADOR.');
-               redirect('index.php/usuarios/iniciar_sesion_admin');
-            }
-            
-
-            
-         } else {
-            $this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
-            redirect('index.php/usuarios/iniciar_sesion_admin');
-         }
-      } else {
-         $this->iniciar_sesion();
-      }
-   }
+    
 
    public function logueado() {
       if($this->session->userdata('logueado')){

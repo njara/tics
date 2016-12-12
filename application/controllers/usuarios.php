@@ -20,16 +20,21 @@ class Usuarios extends CI_Controller {
          $this->load->model('usuario_model');
          $usuario = $this->usuario_model->usuario_por_nickname_password($rut, $password);
          if ($usuario) {
-            $datos = array();
-            $datos['ultima_sesion'] = date("Y-m-d H:i:s"); 
-            $this->usuario_model->marcar_sesion_valida($rut, $datos);
-            $usuario_data = array(
-               'id_persona' => $usuario->id_persona,
-               'nickname_show' => $usuario->nickname,
-               'logueado' => TRUE
-               );
-            $this->session->set_userdata($usuario_data);
-            redirect('index.php/usuarios/logueado');
+            if($this->usuario_model->isBanned($rut)){
+               $this->session->set_flashdata('error', 'El usuario está suspendido.');
+            redirect('index.php/usuarios/iniciar_sesion');
+            }  else {
+               $datos = array();
+               $datos['ultima_sesion'] = date("Y-m-d H:i:s"); 
+               $this->usuario_model->marcar_sesion_valida($rut, $datos);
+               $usuario_data = array(
+                  'id_persona' => $usuario->id_persona,
+                  'nickname_show' => $usuario->nickname,
+                  'logueado' => TRUE
+                  );
+               $this->session->set_userdata($usuario_data);
+               redirect('index.php/usuarios/logueado');
+            }
          } else {
             $this->session->set_flashdata('error', 'El usuario o la contraseña son incorrectos.');
             redirect('index.php/usuarios/iniciar_sesion');

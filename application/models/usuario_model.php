@@ -44,6 +44,18 @@ class Usuario_model extends CI_Model {
 		$this->db->update('persona',$data);
 		return true;
 	}
+	public function isBanned($rut){
+		$this->db->select('status');
+		$this->db->from('persona');
+		$this->db->where('rut', $rut);
+		$consulta = $this->db->get();
+		$resultado = $consulta->row();
+		if($resultado->status == 2){
+			return true; 
+		} else {
+			return false;
+		}
+	}
 
 }
 ?>
