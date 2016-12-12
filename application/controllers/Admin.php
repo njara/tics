@@ -241,5 +241,22 @@ class Admin extends CI_Controller {
          redirect('index.php/admin/iniciar_sesion');
       }
    }
+   public function status(){
+       if ($this->input->post()) {
+         $rut = $this->input->post('rut');
+         $this->load->model('admin_model');
+         $status = $this->admin_model->isBanned($rut);
+         if($status) {
+            $this->admin_model->unban($rut);
+         } else {
+            $this->admin_model->ban($rut);
+            
+         }
+         redirect('index.php/admin/mostrar_usuarios');
+         
+      } else {
+         $this->iniciar_sesion();
+      }
+   }
 }
 ?>

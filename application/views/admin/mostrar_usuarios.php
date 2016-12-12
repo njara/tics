@@ -84,14 +84,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php
 								foreach ($usuarios as $row)
 								{
+
+									
 									echo "<tr>";
-									echo "<td>".$row['rut']."</td>";
+									echo '<form class="form" method="post" action="'.base_url().'index.php/admin/status">';
+									echo '<input type="hidden" class="form-control" name="rut" id="rut" value='.$row['rut'].'>';
+									echo '<td>'.$row['rut']."</td>";
 									echo "<td>".$row['nombre']."</td>";
 									echo "<td>".$row['nickname']."</td>";
-									echo '<td><div">
-        								  	<a class="btn btn-danger btn-sm" href="<?php echo base_url();?>index.php/"> estado</a>
+									if($row['status']){
+										echo '<td><div>
+        								  	<button class="btn btn-success btn-sm" type="submit"> OK</button>
 								          </div>'.'</td>';
-									echo "</tr>";
+									}else{
+										echo '<td><div>
+        								  	<button class="btn btn-danger btn-sm" type="submit"> Banned</button>
+								          </div>'.'</td>';
+									}
+									echo '</form>';
+									echo '</tr>';
+									
 								}
 								?>
 							</tbody>

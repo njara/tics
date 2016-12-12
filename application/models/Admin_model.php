@@ -90,13 +90,35 @@ class Admin_model extends CI_Model {
 	}
 
 	public function usuarios(){
-		$this->db->select('persona.rut, persona.nombre, persona.nickname');
+		$this->db->select('persona.rut, persona.nombre, persona.nickname, persona.status');
 		$this->db->from('usuario');
 		$this->db->join('persona','usuario.id_persona = persona.rut');
 		
 		$consulta = $this->db->get();
 		$resultado = $consulta->result_array();
 		return $resultado;
+	}
+	public function ban($rut){
+		$sql = "UPDATE persona SET status= 2  WHERE rut = ".$rut;
+ 		$this->db->query($sql);
+		
+	}
+	public function unban($rut){
+		$sql = "UPDATE persona SET status= 1  WHERE rut = ".$rut;
+ 		$this->db->query($sql);
+		
+	}
+	public function isBanned($rut){
+		$this->db->select('status');
+		$this->db->from('persona');
+		$this->db->where('rut', $rut);
+		$consulta = $this->db->get();
+		$resultado = $consulta->row();
+		if($resultado->status == 2){
+			return true; 
+		} else {
+			return false;
+		}
 	}
 
 }
