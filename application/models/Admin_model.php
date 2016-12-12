@@ -69,6 +69,23 @@ class Admin_model extends CI_Model {
 		$resultado = $consulta->result_array();
 		return $resultado;
 	}
+	public function evaluaciones(){
+		$this->db->select('nombre, fecha');
+		$this->db->from('evaluacion');
+		$consulta = $this->db->get();
+		$resultado = $consulta->result_array();
+		return $resultado;
+	}
+	public function crear_evaluacion($data){
+		$this->db->insert('evaluacion', $data);
+	}
+	public function cursos(){
+		$this->db->select('id, nombre');
+		$this->db->from('curso');
+		$consulta = $this->db->get();
+		$resultado = $consulta->result_array();
+		return $resultado;
+	}
 	public function orden_compra() {
 		$this->db->select('empresa.nombre as empresa, orden_de_compra.id as id, curso.nombre as curso_nombre, ejecutivo.nombre as ejecutivo, ejecutivo.apellido_paterno as ejecutivo_apellido_paterno,  gestor.nombre as gestor, gestor.apellido_paterno as gestor_apellido_paterno,valor_curso');
 		$this->db->from('orden_de_compra');

@@ -38,10 +38,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="ACTIVE"><a href="<?php echo base_url();?>index.php/admin/logueado">HOME <span class="sr-only">(current)</span></a></li>
+					<li><a href="<?php echo base_url();?>index.php/admin/logueado">HOME <span class="sr-only">(current)</span></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<?php echo base_url();?>index.php/admin/mostrar_perfil">Perfil</a></li>
+					<li class="active"><a <a href="<?php echo base_url();?>index.php/admin/mostrar_perfil">Perfil</a></li>
 					<li><a>Bienvenido, <?php echo $nickname_show ?></a></li>
 					<li>
 						<a href="<?php echo base_url() ?>index.php/admin/cerrar_sesion"> Cerrar sesión </a>
@@ -50,28 +50,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
-
-
 	<!-- ______________________________________________BODY____________________________________________-->
-
+	<br>
+	<br>
 	<div class="container">
-		<h1 class="text-center">  Bienvenido ADMINISTRADOR, <?php echo $nickname_show; ?> </h1>
-		<br>
-		<div class="row col-md-4 col-md-offset-4">
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_orden_compra" class="btn btn-primary btn-block">Ver Orden Compra</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_alumnos" class="btn btn-primary btn-block">Ver Alumnos</a>
-			<br>
-			<a class="btn btn-primary btn-block">Ver Cursos</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_pruebas" class="btn btn-primary btn-block">Ver pruebas</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/crear_prueba" class="btn btn-primary btn-block">Crear prueba</a>
-			<br>
+		<div class="col-md-6 col-md-offset-3">
+			<form class="form-horizontal" method="post" action="<?php echo base_url() ?>index.php/admin/crear_prueba">
+				<fieldset>
+					<legend>Crear Prueba</legend>
+					<div class="form-group">
+						<label for="nombre" class="col-lg-2 control-label">Nombre</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" name="nombre" id="nombre" placeholder="nombe de la prueba" value="">
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label for="fecha" class="col-lg-2 control-label">Fecha</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" name="fecha" id="fecha" placeholder="aaaa-mm-dd" value="">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="curso" class="col-lg-2 control-label">Curso</label>
+						<div class="col-lg-10">
+							<select class="form-control" id="curso" name="curso">
+								<?php
+								foreach ($cursos as $row)
+								{
+									echo "<option value='".$row['id']."'>".$row['nombre']."</option>";
+								}
+								?>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-10 col-lg-offset-2">
+							<a class="btn btn-danger btn-sm" href="<?php echo base_url();?>index.php/admin/logueado"> Cancelar</a>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
 		</div>
-		<br>
-		
 
 	</div>
 </body>
