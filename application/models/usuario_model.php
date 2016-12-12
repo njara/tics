@@ -56,6 +56,12 @@ class Usuario_model extends CI_Model {
 			return false;
 		}
 	}
+	public function agregar_imagen($rut,$data){
+		$this->db->where('rut',$rut);
+		$this->db->update('persona',$data);
+		return true;
+
+	}
 
 }
 ?>
