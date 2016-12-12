@@ -60,5 +60,11 @@ class Empresa_model extends CI_Model {
 		$this->db->update('persona_es_contacto',$cargo);
 		return true;
 	}
+
+	public function marcar_sesion_valida($id_persona,$data){
+		$this->db->where('rut',$id_persona);
+		$this->db->update('persona',$data);
+		return true;
+	}
 }
 ?>
