@@ -48,6 +48,7 @@ public function logueado() {
   if($this->session->userdata('logueado')){
    $data = array();
    $data['nickname_show'] = $this->session->userdata('nickname_show');
+   $data['id_persona'] = $this->session->userdata('id_persona');
    $this->load->view('usuarios/logueado', $data);
  }else{
    redirect('index.php/usuarios/iniciar_sesion');
@@ -193,7 +194,7 @@ $this->upload->data();
  
  $this->load->model('usuario_model');
  $this->usuario_model->agregar_imagen($id_persona, $data);
- redirect('index.php/usuarios/mostrar_perfil');
+ redirect('index.php/usuarios/logueado');
 }
 }
 ?>

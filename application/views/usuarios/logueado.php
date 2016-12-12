@@ -57,7 +57,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="container">
 		<h1 class="text-center">  Bienvenido, <?php echo $nickname_show; ?> </h1>
 		<h3 style="color: red;" class="text-center">  No posee pruebas asignadas. </h3>
-		<a class="btn btn-info" href="<?php echo base_url();?>index.php/usuarios/show_form">Agregar Avatar</a>
+		<br>
+		<br>
+		<br>
+		<div class="container text-center">
+			<div class="col-md-12">
+				<p>Avatar:</p>
+				<img src="<?php echo base_url() ?>uploads/<?php echo $id_persona; ?>.png" alt="Smiley face" height="124" width="124">
+			</div>
+			<br>
+			
+			<div class="col-md_12">
+				<a class="btn btn-info" href="<?php echo base_url();?>index.php/usuarios/show_form">Agregar/Editar Avatar</a>
+			</div>
+		</div>
+		
+		
 		<br>
 
 	</div>
