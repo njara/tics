@@ -38,10 +38,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="ACTIVE"><a href="<?php echo base_url();?>index.php/admin/logueado">HOME <span class="sr-only">(current)</span></a></li>
+					<li class=""><a href="<?php echo base_url();?>index.php/admin/logueado">HOME <span class="sr-only">(current)</span></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<?php echo base_url();?>index.php/admin/mostrar_perfil">Perfil</a></li>
+					<li class=""><a <a href="<?php echo base_url();?>index.php/admin/mostrar_perfil">Perfil</a></li>
 					<li><a>Bienvenido, <?php echo $nickname_show ?></a></li>
 					<li>
 						<a href="<?php echo base_url() ?>index.php/admin/cerrar_sesion"> Cerrar sesión </a>
@@ -50,28 +50,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
-
-
 	<!-- ______________________________________________BODY____________________________________________-->
-
+	<br>
+	<br>
 	<div class="container">
-		<h1 class="text-center">  Bienvenido ADMINISTRADOR, <?php echo $nickname_show; ?> </h1>
-		<br>
-		<div class="row col-md-4 col-md-offset-4">
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_orden_compra" class="btn btn-primary btn-block">Ver Orden Compra</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_alumnos" class="btn btn-primary btn-block">Ver Alumnos</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_cursos" class="btn btn-primary btn-block">Ver Cursos</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/mostrar_pruebas" class="btn btn-primary btn-block">Ver pruebas</a>
-			<br>
-			<a href="<?php echo base_url() ?>index.php/admin/crear_prueba" class="btn btn-primary btn-block">Crear prueba</a>
-			<br>
 
-		</div>
-		<br>
-		
+		<?php if($error): ?>
+			<div class="col-md-6 col-md-offset-3">
+				<h3 class="text-center" style="color: red;"> <?php echo $error ?></h3>
+				<a href="<?php echo base_url();?>index.php/admin/logueado" class="btn btn-primary" >Volver</a>
+			</div>
+		<?php else: ?>
+			<div class="col-md-10 col-md-offset-1">
+
+
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Cursos</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped table-hover ">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Nombre</th>
+									<th>Fecha de inicio</th>
+									<th>Fecha de termino</th>
+									<th>Direccion ejecucion</th>
+									<th>Valor</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<?php
+								foreach ($cursos as $row)
+								{
+									echo "<tr>";
+									echo "<td>".$row['id']."</td>";
+									echo "<td>".$row['nombre']."</td>";
+									echo "<td>".$row['fecha_inicio']."</td>";
+									echo "<td>".$row['fecha_termino']."</td>";
+									echo "<td>".$row['direccion_ejecuccion']."</td>";
+									echo "<td>".$row['valor_curso']."</td>";
+									echo "</tr>";
+								}
+								?>
+							</tbody>
+						</table> 
+					</div>
+				</div>
+				<a href="<?php echo base_url();?>index.php/admin/logueado" class="btn btn-primary" >Volver</a>
+			</div>
+		<?php endif; ?>
 
 	</div>
 </body>
